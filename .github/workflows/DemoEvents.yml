@@ -1,4 +1,4 @@
-name: Deploy
+name: Events Workflow
 on:
   pull_request:
     types:
