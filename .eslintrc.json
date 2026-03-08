@@ -9,9 +9,7 @@
     "plugin:react/recommended"
   ],
   "parserOptions": {
-    "ecmaFeatures": {
-      "jsx": true
-    },
+    "ecmaFeatures": { "jsx": true },
     "ecmaVersion": "latest",
     "sourceType": "module"
   },
@@ -19,5 +17,25 @@
   "settings": {
     "react": { "version": "detect" }
   },
-  "rules": {}
+
+  "overrides": [
+  {
+    "files": ["**/*.test.js", "**/*.test.jsx"],
+    "env": {
+      "browser": true,
+      "node": true
+    },
+    "globals": {
+      "describe": "readonly",
+      "it": "readonly",
+      "expect": "readonly",
+      "beforeEach": "readonly",
+      "afterEach": "readonly"
+    }
+  }
+],
+
+  "rules": {
+    "react/react-in-jsx-scope": "off"
+  }
 }
