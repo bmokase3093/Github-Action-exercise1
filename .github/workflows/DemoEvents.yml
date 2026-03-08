@@ -1,0 +1,53 @@
+name: Events Workflow
+on:
+  pull_request:
+    types: # You can specify the types of pull request events to trigger the workflow. For example:
+      - opened
+    branches: # You can specify the branches that will trigger the workflow when a pull request is opened. For example:
+      - main
+      - 'dev-*'
+      - 'feat/**'
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+      - 'dev-*'
+      - 'feat/**'
+    paths-ignore:
+      - '.github/workflows/*'
+jobs:
+  lint-dev:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get the code
+        uses: actions/checkout@v3
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+      - name: Install dependencies
+        run: npm ci
+      - name: Lint the code
+        run: npm run lint
+  test:
+    needs: lint-dev
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get the code
+        uses: actions/checkout@v3
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+      - name: Install dependencies
+        run: npm ci
+      - name: Run tests
+        run: npm test
+  build:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get the code
+        uses: actions/checkout@v3
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+      - name: Install dependencies
+        run: npm ci
+      - name: Build the project
+        run: npm run build
