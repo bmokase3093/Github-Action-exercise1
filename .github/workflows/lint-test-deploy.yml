@@ -9,7 +9,9 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
       - name: Install dependencies
-        run: npm install
+        run: |
+          npm install
+          npm init @eslint/config
       - name: Lint the code
         run: npm run lint
       - name: Run tests
