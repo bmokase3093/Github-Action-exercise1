@@ -1,9 +1,9 @@
 name: Events Workflow
 on:
   pull_request:
-    types:
+    types: # You can specify the types of pull request events to trigger the workflow. For example:
       - opened
-    branches:
+    branches: # You can specify the branches that will trigger the workflow when a pull request is opened. For example:
       - main
       - 'dev-*'
       - 'feat/**'
