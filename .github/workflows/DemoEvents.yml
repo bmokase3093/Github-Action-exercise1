@@ -1,5 +1,20 @@
-name: Deploy
-on: [push, workflow_dispatch]
+name: Events Workflow
+on:
+  pull_request:
+    types: # You can specify the types of pull request events to trigger the workflow. For example:
+      - opened
+    branches: # You can specify the branches that will trigger the workflow when a pull request is opened. For example:
+      - main
+      - 'dev-*'
+      - 'feat/**'
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+      - 'dev-*'
+      - 'feat/**'
+    paths-ignore:
+      - '.github/workflows/*'
 jobs:
   lint-dev:
     runs-on: ubuntu-latest
@@ -43,7 +58,7 @@ jobs:
         uses: appleboy/ssh-action@v0.1.3 # A marketplace action for SSH
         with:
           host: ${{ secrets.EC2_HOST }} # EC2 public IP stored as a secret
-          username: root # Or 'ubuntu' depending on AMI
+          username: ec2-user # Or 'ubuntu' depending on AMI
           key: ${{ secrets.EC2_PRIVATE_KEY }}
           script: |
 
